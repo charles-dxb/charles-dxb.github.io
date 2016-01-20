@@ -68,7 +68,6 @@
         var amount = $("amount");
         var apr = $("apr");
         var years = $("years");
-        var zipcode = $("zipcode");
         var payment = $("payment");
         var total = $("total");
         var totalinterest = $("totalinterest");
@@ -85,10 +84,10 @@
             total.innerHTML = (monthly * payments).toFixed(2);
             totalinterest.innerHTML = ((monthly * payments) - principal).toFixed(2);
 
-            save(amount.value,apr.value,years.value,zipcode.value);
+            save(amount.value,apr.value,years.value);
 
             try{
-                getLenders(amount.value, apr.value, years.value, zipcode.value);
+                getLenders(amount.value, apr.value, years.value);
             }
             catch (e){}
 
@@ -102,12 +101,11 @@
         }
     }
 
-    function save(amount, apr, years, zipcode){
+    function save(amount, apr, years){
         if(window.localStorage){
             localStorage.loan_amount = amount;
             localStorage.loan_apr = apr;
             localStorage.loan_years = years;
-            localStorage.loan_zipcode = zipcode;
         }
     }
 
@@ -116,7 +114,6 @@
           $("amount").value = localStorage.loan_amount;
           $("apr").value = localStorage.loan_apr;
           $("years").value = localStorage.loan_years;
-          $("zipcode").value = localStorage.loan_zipcode;
       }
     };
 
