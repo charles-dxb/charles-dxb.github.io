@@ -95,8 +95,6 @@
 			acpiInterest.push(acpiIMonthly); 
 			acpiPrincipal.push(acpiPMonthly.toFixed(2));
 		}	
-        console.log(...acpiInterest);		
-		console.log(...acpiPrincipal);
 		
 		var averageCapital = [];
 		var temp,
@@ -105,8 +103,7 @@
 		    temp = principal/payments * (i - 1);
 			aver = principal/payments+(principal-temp)*interest;
 			averageCapital.push(aver.toFixed(2))
-		}
-		console.log(...averageCapital);	
+		}	
 		
 		var num = 0;
 		for(var j = 0; j < 60;j++){
