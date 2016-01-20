@@ -26,14 +26,14 @@
               <th>贷款余额，累计权益，支付利息</th>
           </tr>
           <tr>
-              <td>贷款金额 (RMB):</td>
+              <td>贷款总额 (RMB):</td>
               <td><input id="amount" onchange="calculate();"> </td>
               <td rowspan="8">
                   <canvas id="graph" width="400" height="250"></canvas>
               </td>
           </tr>
           <tr>
-              <td>利率 (%)</td>
+              <td>贷款利率 (%)</td>
               <td><input id="apr" onchange="calculate();"> </td>
           </tr>
           <tr>
@@ -72,24 +72,57 @@
         var total = $("total");
         var totalinterest = $("totalinterest");
 
-        var principal = parseFloat(amount.value);
+        var principal = parseFloat(amount.value);     //总金额
         var interest = parseFloat(apr.value)/100/12;
         var payments = parseFloat(years.value) * 12;
 
         var x = Math.pow(1+interest,payments);
         var monthly = (principal*x*interest)/(x-1);
-
+		
+		var acpiInterest = [];	
+        var acpiPrincipal = [];	
+		var acpiIFirstMonth = (principal*interest).toFixed(2);
+		var acpiPFirstMonth = parseFloat(monthly.toFixed(2)) - parseFloat(acpiIFirstMonth);
+		acpiInterest.push(acpiIFirstMonth);	
+		acpiPrincipal.push(acpiPFirstMonth.toFixed(2));
+		var acpiNum=0;
+		var acpiIMonthly,
+		    acpiPMonthly;
+		for(var m = 1; m < payments+1; m++){
+		    acpiNum = parseFloat(acpiNum) + parseFloat(acpiPrincipal[m-1]);
+			acpiIMonthly = ((principal-acpiNum)*interest).toFixed(2);
+			acpiPMonthly = parseFloat(monthly.toFixed(2)) - parseFloat(acpiIMonthly);
+			acpiInterest.push(acpiIMonthly); 
+			acpiPrincipal.push(acpiPMonthly.toFixed(2));
+		}	
+        console.log(...acpiInterest);		
+		console.log(...acpiPrincipal);
+		
+		var averageCapital = [];
+		var temp,
+		    aver;
+		for(var i = 1; i < payments+1; i++){
+		    temp = principal/payments * (i - 1);
+			aver = principal/payments+(principal-temp)*interest;
+			averageCapital.push(aver.toFixed(2))
+		}
+		console.log(...averageCapital);	
+		
+		var num = 0;
+		for(var j = 0; j < 60;j++){
+			num += parseFloat(averageCapital[j]);
+		}
+		var acInterest = parseFloat(num) - parseFloat((principal/payments*60).toFixed(2));
+		console.log(num);
+		console.log((principal/payments*60).toFixed(2));
+        console.log(acInterest);
+		
         if(isFinite(monthly)){
             payment.innerHTML = monthly.toFixed(2);
             total.innerHTML = (monthly * payments).toFixed(2);
             totalinterest.innerHTML = ((monthly * payments) - principal).toFixed(2);
 
             save(amount.value,apr.value,years.value);
-
-            try{
-                getLenders(amount.value, apr.value, years.value);
-            }
-            catch (e){}
 
             chart(principal, interest, monthly, payments);
         }
