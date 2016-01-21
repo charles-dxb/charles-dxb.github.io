@@ -88,20 +88,29 @@
 		var acpiNum=0;
 		var acpiIMonthly,
 		    acpiPMonthly;
-		for(var m = 1; m < payments+1; m++){
+		for(var m = 1; m < payments; m++){
 		    acpiNum = parseFloat(acpiNum) + parseFloat(acpiPrincipal[m-1]);
 			acpiIMonthly = ((principal-acpiNum)*interest).toFixed(2);
 			acpiPMonthly = parseFloat(monthly.toFixed(2)) - parseFloat(acpiIMonthly);
 			acpiInterest.push(acpiIMonthly); 
 			acpiPrincipal.push(acpiPMonthly.toFixed(2));
-		}	
-		
+		}
+
+        var tNum1 = 0,
+            tNum2 = 0;
+        for(var n = 0; n < 60; n++){
+            tNum1 += parseFloat(acpiInterest[n]);
+            tNum2 += parseFloat(acpiPrincipal[n]);
+        }
+        console.log(tNum1);
+        console.log(tNum2);
+
 		var averageCapital = [];
-		var temp,
+		var acTemp,
 		    aver;
 		for(var i = 1; i < payments+1; i++){
-		    temp = principal/payments * (i - 1);
-			aver = principal/payments+(principal-temp)*interest;
+            acTemp = principal/payments * (i - 1);
+			aver = principal/payments+(principal-acTemp)*interest;
 			averageCapital.push(aver.toFixed(2))
 		}	
 		
