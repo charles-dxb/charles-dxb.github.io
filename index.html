@@ -26,17 +26,26 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="apr" class="col-sm-2 control-label">贷款利率(%):</label>
+            <label for="years" class="col-sm-2 control-label">贷款年限(年):</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="apr"
-                       placeholder="请输入利率" onchange="calculate();">
+                <select class="form-control" id="years" onchange="calculate();">
+                    <option value="1">1年(12)期</option>
+                    <option value="2">2年(24)期</option>
+                    <option value="5">5年(60)期</option>
+                    <option value="10">10年(120)期</option>
+                    <option value="15">15年(180)期</option>
+                    <option value="20">20年(240)期</option>
+                    <option value="25">25年(320)期</option>
+                    <option value="30">30年(360)期</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label for="years" class="col-sm-2 control-label">贷款年限(年):</label>
+            <label for="apr" class="col-sm-2 control-label">贷款利率(%):</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="years"
-                       placeholder="请输入年限" onchange="calculate();">
+                <select class="form-control" id="apr"onchange="calculate();">
+                    <option value="3.25">15年10月24日基准利率</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
